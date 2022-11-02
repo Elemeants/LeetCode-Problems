@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(LeedCode_)
+project(LeedCode_617_Merge_Two_Bin_Tree)
 
 set(CMAKE_CXX_STANDARD 17)
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(LeedCode_)
+project(LeedCode_116_Populating_Next_Ptr_Node)
 
 set(CMAKE_CXX_STANDARD 17)
 

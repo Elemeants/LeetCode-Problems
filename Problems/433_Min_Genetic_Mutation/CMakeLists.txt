@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(LeedCode_)
+project(LeedCode_433_Min_Genetic_Mutation)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -25,7 +25,8 @@ target_link_libraries(
   GTest::gtest_main
 )
 
-target_compile_options(Gtest PUBLIC -g -Wall)
+target_compile_options(Gtest PRIVATE -Wall -O3)
+
 target_include_directories (Gtest PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 
 include(GoogleTest)
