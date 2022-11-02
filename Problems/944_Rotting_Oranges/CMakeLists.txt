@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(LeedCode_)
+project(LeedCode_944_Rotting_Oranges)
 
 set(CMAKE_CXX_STANDARD 17)
 
