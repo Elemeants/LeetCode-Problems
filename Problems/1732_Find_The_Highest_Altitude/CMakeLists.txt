@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(LeetCode_3_Longest_Substring)
+project(LeedCode_1732_Find_The_Highest_Altitude)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -25,6 +25,7 @@ target_link_libraries(
   GTest::gtest_main
 )
 
+target_compile_options(Gtest PUBLIC -g -Wall -Werror)
 target_include_directories (Gtest PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 
 include(GoogleTest)

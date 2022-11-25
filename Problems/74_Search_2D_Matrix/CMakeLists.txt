@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(LeetCode_3_Longest_Substring)
+project(LeedCode_74_Search_2D_Matrix)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -23,8 +23,10 @@ add_executable(
 target_link_libraries(
   Gtest
   GTest::gtest_main
+  -lasan
 )
 
+target_compile_options(Gtest PUBLIC -g -Wall -Werror -fsanitize=address)
 target_include_directories (Gtest PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 
 include(GoogleTest)

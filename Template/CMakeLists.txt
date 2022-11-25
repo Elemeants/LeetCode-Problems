@@ -23,9 +23,10 @@ add_executable(
 target_link_libraries(
   Gtest
   GTest::gtest_main
+  -lasan
 )
 
-target_compile_options(Gtest PUBLIC -g -Wall -Werror)
+target_compile_options(Gtest PUBLIC -g -Wall -Werror -fsanitize=address)
 target_include_directories (Gtest PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 
 include(GoogleTest)

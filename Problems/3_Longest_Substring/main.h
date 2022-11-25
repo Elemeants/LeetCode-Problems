@@ -3,8 +3,9 @@
 //
 #pragma once
 
-#include <algorithm>
+#include <set>
 #include <stdint.h>
+#include <iostream>
 #include <string>
 
 class Solution
@@ -13,40 +14,23 @@ public:
     int lengthOfLongestSubstring(std::string s)
     {
         size_t max_size = 0;
-        size_t size = 0;
-        const char *left_edge = s.c_str();
-        const char *right_edge = s.c_str();
+        std::set<char> uniques;
+        int tail = 0;
 
-        for (char c : s)
-        {
-            size = right_edge - left_edge;
-
-            if (size > 0 && std::find(left_edge, right_edge, c) != right_edge)
-            {
-                if (max_size < size)
-                {
+        for (int head = 0; head < s.size(); head++) {
+            const char c = s[head];
+            if (uniques.find(c) != uniques.end()) {
+                while (tail < head && s[tail] != c) {
+                    tail ++;
+                }
+                tail ++;
+            } else {
+                uniques.insert(c);
+                const int size = (head - tail) + 1;
+                if (size > max_size) {
                     max_size = size;
                 }
-
-                while (left_edge <= right_edge)
-                {
-
-                    if (c == *left_edge)
-                    {
-                        left_edge++;
-                        break;
-                    }
-
-                    left_edge++;
-                }
             }
-
-            right_edge++;
-        }
-
-        if (max_size < right_edge - left_edge)
-        {
-            max_size = right_edge - left_edge;
         }
 
         return max_size;
