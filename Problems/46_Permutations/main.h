@@ -27,16 +27,6 @@ public:
     return permutations;
   }
 
-  int factorial (int k) {
-    return ((k == 1) ? 1 : (factorial(k - 1) * k));
-  }
-
-  void swap (std::vector<int>& perm, int a, int b) {
-    const int aux = perm[a];
-    perm[a] = perm[b];
-    perm[b] = aux;
-  }
-
   void permute_recursive (
       listOfPermutations&             result,
       const std::vector<int>&         base,

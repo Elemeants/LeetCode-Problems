@@ -11,19 +11,6 @@
 #include <unordered_map>
 #include <iostream>
 
-template <typename __TInputIterator, typename __TOutIterator, typename __TransformationFunc>
-void transformWithIndex(__TInputIterator begin, __TInputIterator end, __TOutIterator outBegin, __TransformationFunc transform)
-{
-  size_t index = 0;
-  while (begin != end)
-  {
-    *outBegin = transform(*begin, index);
-    begin++;
-    index++;
-    outBegin++;
-  }
-}
-
 //
 // Description:
 // You are a professional robber planning to rob houses along a street.
