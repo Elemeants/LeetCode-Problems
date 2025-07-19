@@ -47,58 +47,32 @@
 #include <algorithm>
 #include <iostream>
 #include <utility>
+#include <queue>
+#include <map>
 
 typedef struct Node {
 public:
-  std::vector<struct Node*> children;
+  std::map<std::string, struct Node*> children;
   std::string folder_name;
   bool saved;
 
-  const std::vector<Node*>::iterator findChildNode(std::string folder_name) {
-    const std::vector<Node*>::iterator it = std::find_if(this->children.begin(), this->children.end(), [&](const Node* node) -> bool {
-      return std::equal(node->folder_name.begin(), node->folder_name.end(), folder_name.begin(), folder_name.end());
-    });
-    return it;
-  }
-
   struct Node* upsertNode(std::string folder_name) {
-    std::vector<Node*>::iterator children = findChildNode(folder_name);
-    if (children == this->children.end()) {
+    if (this->children.count(folder_name) == 0) {
       // If folder name found
       Node* new_node = new Node();
       new_node->folder_name = folder_name;
-      this->children.push_back(new_node);
+      this->children[folder_name] = new_node;
       return new_node;
     } else {
-      return *children;
+      return this->children.at(folder_name);
     }
   }
 } Node;
 
 class Solution {
-  void sortByNestedLevels(std::vector<std::string>& folders) {
-    std::sort(folders.begin(), folders.end(), [](const std::string& l, const std::string& r) -> int {
-      std::pair<size_t, size_t> nested_level = std::make_pair(0, 0);
-
-      for (size_t idx = 0; idx < std::max(l.size(), r.size()); idx ++) {
-        const std::pair<char, char> ch = std::make_pair(l[std::min(idx, l.size())], r[std::min(idx, r.size())]);
-        if (ch.first == '/') {
-          nested_level.first ++;
-        }
-        if (ch.second == '/') {
-          nested_level.second ++;
-        }
-      }
-
-      return nested_level.first < nested_level.second;
-    });
-  }
  public:
   std::vector<std::string> removeSubfolders(std::vector<std::string>& folders) {
-    sortByNestedLevels(folders);
-
     Node* base = new Node();
-    std::vector<std::string> unique_folders;
 
     for (size_t idx = 0; idx < folders.size(); idx ++) {
       const std::string folder = folders[idx];
@@ -113,7 +87,7 @@ class Solution {
         }
 
         // folder name is the string in between ch_folder_name_st and ch_idx
-        const std::string folder_name = folder.substr(ch_folder_name_st, ch_idx - ch_folder_name_st);
+        const std::string folder_name = folder.substr(0, ch_idx);
         nav = nav->upsertNode(folder_name);
         if (nav->saved) {
           found_sub_folder = true;
@@ -127,12 +101,26 @@ class Solution {
         continue;
       }
 
-      const std::string folder_name = folder.substr(ch_folder_name_st, folder.size() - ch_folder_name_st);
+      const std::string folder_name = folder.substr(0, folder.size());
       nav = nav->upsertNode(folder_name);
       nav->saved = true;
-      unique_folders.push_back(folder);
     }
 
+    std::vector<std::string> unique_folders;
+    std::queue<Node*> queue;
+    queue.push(base);
+    while(!queue.empty()) {
+      Node* node = queue.front(); queue.pop();
+      
+      if (node->saved) {
+        unique_folders.push_back(node->folder_name);
+        continue;
+      }
+
+      for (auto it = node->children.begin(); it != node->children.end(); ++it) {
+        queue.push(it->second);
+      }
+    }
     return unique_folders;
   }
 };

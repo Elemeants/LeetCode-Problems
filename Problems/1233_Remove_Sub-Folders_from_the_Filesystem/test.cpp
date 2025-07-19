@@ -31,3 +31,9 @@ TEST(Test1233, Case0) {
   std::vector<std::string> expected = {"/helloworldfolder", "/a/b/ca"};
   EXPECT_EQ(expected, Solution().removeSubfolders(folders));
 }
+
+TEST(Test1233, Case1) {
+  std::vector<std::string> folders = {"/ah/al/am", "/ah/al"};
+  std::vector<std::string> expected = {"/ah/al"};
+  EXPECT_EQ(expected, Solution().removeSubfolders(folders));
+}
